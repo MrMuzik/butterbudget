@@ -34,6 +34,100 @@ butterbudget/
 └── README.md                     # Project documentation
 ```
 
+## Stack
+
+Awesome! Here’s the **finalized setup** for your application:
+
+* * *
+
+### **Frontend:**
+
+*   **Framework**: SvelteKit (Vite built-in) with TypeScript.
+*   **UI**: Skeleton UI for component styling and accessibility.
+*   **Testing**:
+    *   **Unit/Integration Testing**: Vitest.
+    *   **End-to-End Testing**: Playwright or Cypress.
+
+* * *
+
+### **Backend:**
+
+*   **Runtime**: Deno for custom server logic and API handling.
+*   **Backend Services**: Supabase (PostgreSQL) for database, authentication, and real-time features.
+*   **Custom API Endpoints**: Handled via Deno, with full control over backend logic and security.
+
+* * *
+
+### **Database:**
+
+*   **Database**: Supabase (PostgreSQL).
+*   **Real-Time Features**: Supabase Real-Time API for live data updates.
+*   **Backup**: Supabase automated backups for database recovery.
+
+* * *
+
+### **Authentication:**
+
+*   **Authentication**: Supabase (integrated into Deno backend for secure server-side session management).
+*   **Session Management**: Session tokens with Deno, ensuring secure handling of user sessions.
+*   **Rate Limiting**: Custom rate-limiting logic with `deno-limiter`.
+
+* * *
+
+### **Hosting:**
+
+*   **Hosting**: Deno Deploy (for global edge hosting and auto-scaling).
+
+* * *
+
+### **Testing:**
+
+*   **Frontend**: Vitest for unit and integration testing; Playwright or Cypress for end-to-end testing.
+*   **Backend**: Deno’s built-in test runner for unit/integration tests, Supertest for API testing, and K6 or Artillery for load/performance testing.
+
+* * *
+
+### **Logging & Monitoring**:
+
+*   **Logging**: Supabase Logs and Deno Deploy logging.
+*   **Error Handling**: Basic error handling with Deno and SvelteKit, growing into Sentry for real-time error tracking.
+
+* * *
+
+### **Caching (Optional)**:
+
+*   **Initial Caching**: Supabase's built-in caching.
+*   **Future Caching**: Plan to integrate Redis for advanced caching.
+
+* * *
+
+### **CI/CD**:
+
+*   **CI/CD**: GitHub Actions for continuous integration, running tests and checks before deployment, with automatic pushes to staging and production on Deno Deploy.
+
+* * *
+
+### **Environment Management**:
+
+*   **Environment Variables**: Secure management using Deno Deploy’s environment configuration.
+
+* * *
+
+### **Backup**:
+
+*   **Backup Solution**: Supabase's built-in backup system for database recovery.
+
+* * *
+
+### **Security & Scalability**:
+
+*   Secure handling of authentication, API requests, and database interactions with **Deno**, ensuring security for sensitive financial data.
+*   Scalable deployment with **Deno Deploy**, optimized for global performance.
+
+* * *
+
+This setup is highly secure, scalable, and future-proof, with everything in place for a successful financial services application. You're all set for a smooth development process!
+
 ## Getting Started
 
 This project uses **SvelteKit** for the frontend and **Deno** with **Supabase** for the backend. Make sure you have **Deno** and **Node.js** installed on your machine before proceeding.
