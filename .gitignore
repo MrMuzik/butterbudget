@@ -1,3 +1,5 @@
 .DS_Store
+/src/.env
 .env
 node_modules
+/app/.env
