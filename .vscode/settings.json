@@ -1,0 +1,9 @@
+{
+    "deno.enable": true,
+    "deno.lint": true,
+    "deno.unstable": [], // Optional: if using unstable APIs
+    "deno.importMap": "./import_map.json", // Optional: if using an import map
+    "javascript.suggest.autoImports": false,
+    "typescript.suggest.autoImports": false
+  }
+  
