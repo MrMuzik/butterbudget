@@ -36,10 +36,6 @@ butterbudget/
 
 ## Stack
 
-Awesome! Here’s the **finalized setup** for your application:
-
-* * *
-
 ### **Frontend:**
 
 *   **Framework**: SvelteKit (Vite built-in) with TypeScript.
