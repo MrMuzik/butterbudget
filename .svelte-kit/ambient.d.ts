@@ -26,6 +26,12 @@
  * ```
  */
 declare module '$env/static/private' {
+	export const SUPABASE_URL: string;
+	export const SUPABASE_KEY: string;
+	export const VITE_SUPABASE_URL: string;
+	export const VITE_SUPABASE_ANON_KEY: string;
+	export const VITE_API_BASE_URL: string;
+	export const FRONTEND_URL: string;
 	export const TERM_PROGRAM: string;
 	export const NODE: string;
 	export const INIT_CWD: string;
@@ -117,6 +123,12 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
+		SUPABASE_URL: string;
+		SUPABASE_KEY: string;
+		VITE_SUPABASE_URL: string;
+		VITE_SUPABASE_ANON_KEY: string;
+		VITE_API_BASE_URL: string;
+		FRONTEND_URL: string;
 		TERM_PROGRAM: string;
 		NODE: string;
 		INIT_CWD: string;

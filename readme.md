@@ -105,7 +105,7 @@ butterbudget/
 
 ### **Environment Management**:
 
-*   **Environment Variables**: Secure management using Deno Deploy’s environment configuration.
+*   **Environment Variables**: Managed using `.env` files for local, staging, and production environments. The variables are loaded securely using Deno for the backend and Vite for the frontend.
 
 * * *
 
@@ -155,21 +155,30 @@ deno cache main.ts
 
 ### 3. Set Up Environment Variables
 
-Create a `.env` file in both the `src/` and `api/` directories to securely store environment variables.
+To securely store environment variables for different environments (local, staging, production), you will use `.env` files in your root directory. These environment variables control your API URL and keys for both the frontend and backend.
 
-**In `src/.env`** (for frontend):
+#### **Frontend Environment Variables**
 
 ```
 VITE_SUPABASE_URL=https://your-project-url.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key
+VITE_API_BASE_URL=http://localhost:8000
 ```
 
-**In `api/.env`** (for backend):
+The `VITE_` prefix is required for Vite to expose these variables to your SvelteKit frontend.
+
+#### **Backend Environment Variables**
 
 ```
 SUPABASE_URL=https://your-project-url.supabase.co
 SUPABASE_KEY=your-supabase-service-key
+FRONTEND_URL=http://localhost:5173
 ```
+
+- **Environment Files**:
+    - `.env.local`
+    - `.env.staging`
+    - `.env.production`
 
 ### 4. Run the Development Servers
 
