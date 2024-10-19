@@ -38,5 +38,5 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "butterbudget"
-          entrypoint: "mod.ts"
+          entrypoint: "main.ts"
           root: "build"
