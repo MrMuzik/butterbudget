@@ -52,7 +52,6 @@ declare module '$env/static/private' {
 	export const SSH_AUTH_SOCK: string;
 	export const __CF_USER_TEXT_ENCODING: string;
 	export const npm_execpath: string;
-	export const DENO_INSTALL: string;
 	export const TERM_FEATURES: string;
 	export const PAGER: string;
 	export const LSCOLORS: string;
@@ -69,6 +68,7 @@ declare module '$env/static/private' {
 	export const npm_lifecycle_event: string;
 	export const EDITOR: string;
 	export const npm_package_name: string;
+	export const DENO_ENV: string;
 	export const LANG: string;
 	export const ITERM_PROFILE: string;
 	export const npm_config_npm_version: string;
@@ -149,7 +149,6 @@ declare module '$env/dynamic/private' {
 		SSH_AUTH_SOCK: string;
 		__CF_USER_TEXT_ENCODING: string;
 		npm_execpath: string;
-		DENO_INSTALL: string;
 		TERM_FEATURES: string;
 		PAGER: string;
 		LSCOLORS: string;
@@ -166,6 +165,7 @@ declare module '$env/dynamic/private' {
 		npm_lifecycle_event: string;
 		EDITOR: string;
 		npm_package_name: string;
+		DENO_ENV: string;
 		LANG: string;
 		ITERM_PROFILE: string;
 		npm_config_npm_version: string;
