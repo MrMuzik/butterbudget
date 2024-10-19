@@ -52,6 +52,7 @@ declare module '$env/static/private' {
 	export const SSH_AUTH_SOCK: string;
 	export const __CF_USER_TEXT_ENCODING: string;
 	export const npm_execpath: string;
+	export const DENO_INSTALL: string;
 	export const TERM_FEATURES: string;
 	export const PAGER: string;
 	export const LSCOLORS: string;
@@ -148,6 +149,7 @@ declare module '$env/dynamic/private' {
 		SSH_AUTH_SOCK: string;
 		__CF_USER_TEXT_ENCODING: string;
 		npm_execpath: string;
+		DENO_INSTALL: string;
 		TERM_FEATURES: string;
 		PAGER: string;
 		LSCOLORS: string;

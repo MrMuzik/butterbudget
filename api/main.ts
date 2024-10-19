@@ -79,7 +79,7 @@ const app = new Application();
 const router = new Router();
 
 // Apply CORS middleware using the frontend URL from environment variables
-app.use(oakCors({ origin: frontendUrl }));  // Allow requests from FRONTEND_URL
+app.use(oakCors({ origin: "*" }));  // Allow requests from FRONTEND_URL
 
 // Apply custom rate-limiting middleware: max 100 requests per IP per minute
 app.use(rateLimiter(100, 60 * 1000)); // 100 requests per 60,000 ms (1 minute)
