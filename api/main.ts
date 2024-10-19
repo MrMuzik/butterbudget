@@ -5,7 +5,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.0.0";
 
 // Determine the environment (local, staging, production) from DENO_ENV
 const env = Deno.env.get("DENO_ENV") || "local"; // Default to 'local' if not set
-let envFile = ".env";  // Fallback to a generic .env
+let envFile = ".env"; // Fallback to a generic .env
 
 // Choose the appropriate .env file based on the environment
 if (env === "local") {
@@ -25,7 +25,9 @@ const supabaseKey = envVars.SUPABASE_KEY || Deno.env.get("SUPABASE_KEY");
 
 // Ensure Supabase URL is loaded
 if (!supabaseUrl || !supabaseKey) {
-  throw new Error("Supabase URL or Key is missing. Please check your .env file.");
+  throw new Error(
+    "Supabase URL or Key is missing. Please check your .env file.",
+  );
 }
 
 // Initialize Supabase client
@@ -39,7 +41,7 @@ if (!frontendUrl) {
 }
 
 // Create a map to store request counts by IP address for rate limiting
-const rateLimitMap = new Map<string, { count: number, lastRequest: number }>();
+const rateLimitMap = new Map<string, { count: number; lastRequest: number }>();
 
 // Custom rate-limiting middleware
 function rateLimiter(limit: number, windowMs: number) {
@@ -79,7 +81,7 @@ const app = new Application();
 const router = new Router();
 
 // Apply CORS middleware using the frontend URL from environment variables
-app.use(oakCors({ origin: "*" }));  // Allow requests from FRONTEND_URL
+app.use(oakCors({ origin: "*" })); // Allow requests from FRONTEND_URL
 
 // Apply custom rate-limiting middleware: max 100 requests per IP per minute
 app.use(rateLimiter(100, 60 * 1000)); // 100 requests per 60,000 ms (1 minute)
@@ -125,6 +127,11 @@ router.delete("/api/budgets/:id", async (ctx) => {
 // Apply the routes to the application
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+// Route handler
+app.use((ctx) => {
+  ctx.response.body = "Hello, Deno with custom rate limiting!";
+});
 
 // Start the server and display environment
 await app.listen({ port: 8000 });
