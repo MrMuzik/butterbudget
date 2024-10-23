@@ -43,6 +43,7 @@
 	"dependencies": {
 		"@skeletonlabs/skeleton": "^2.10.2",
 		"@skeletonlabs/tw-plugin": "^0.4.0",
-		"@supabase/supabase-js": "^2.45.4"
+		"@supabase/supabase-js": "^2.45.4",
+		"@sveltejs/adapter-static": "^3.0.5"
 	}
 }
