@@ -119,5 +119,10 @@ router.delete("/api/budgets/:id", async (ctx) => {
 app.use(router.routes());
 app.use(router.allowedMethods());
 
+// Route handler
+app.use((ctx) => {
+  ctx.response.body = "Hello, Deno with custom rate limiting!";
+});
+
 // Start the server
 await app.listen({ port: 8000 });
