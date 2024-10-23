@@ -1,6 +1,8 @@
 [build]
     command = "npm run build"
     publish = "build/"
+    node_version = "18.x"
+
 
 [functions]
     directory = "functions"
