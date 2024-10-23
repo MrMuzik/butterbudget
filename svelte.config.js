@@ -13,7 +13,8 @@ const config = {
 			// Enables edge functions for better performance
 			edge: false,
 			// Enable split if you're using Netlify functions
-			split: false
+			split: false,
+			fallback: 'index.html'
 		}),
 		prerender: {
 		  // Ensure the app can handle dynamic routing correctly
