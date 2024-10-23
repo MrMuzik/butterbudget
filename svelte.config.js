@@ -12,12 +12,19 @@ const config = {
 		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter({
-			edge: false,
-			split: false,
+			precompress: false,
 			pages: 'build',
 			assets: 'build',
 			fallback: 'index.html'
-		})
+		}),
+		prerender: {
+		  // Ensure the app can handle dynamic routing correctly
+		  handleMissingId: 'warn',
+		},
+		paths: {
+		  // If Netlify is hosting on a subdirectory, adjust the base path here
+		  base: ''
+		}
 	}
 };
 
