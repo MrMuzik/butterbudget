@@ -10,12 +10,12 @@ let envFile = ".env";
 // Load environment variables only for local development
 if (env === "local") {
   envFile = "../.env.local";
-  config({ path: envFile });
 }
+const envVars = config({ path: envFile });
 
 // Supabase credentials
-const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-const supabaseKey = Deno.env.get("SUPABASE_KEY")!;
+const supabaseUrl = envVars.SUPABASE_URL || Deno.env.get("SUPABASE_URL")!;
+const supabaseKey = envVars.SUPABASE_KEY || Deno.env.get("SUPABASE_KEY")!;
 
 // Ensure Supabase URL and Key are loaded
 if (!supabaseUrl || !supabaseKey) {
