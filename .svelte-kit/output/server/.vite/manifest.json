@@ -33,15 +33,6 @@
       "_exports.js"
     ]
   },
-  "node_modules/@sveltejs/kit/src/runtime/components/svelte-4/layout.svelte": {
-    "file": "entries/fallbacks/layout.svelte.js",
-    "name": "entries/fallbacks/layout.svelte",
-    "src": "node_modules/@sveltejs/kit/src/runtime/components/svelte-4/layout.svelte",
-    "isEntry": true,
-    "imports": [
-      "_ssr.js"
-    ]
-  },
   "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
     "file": "index.js",
     "name": "index",
@@ -58,6 +49,15 @@
     "name": "entries/pages/_layout.server.ts",
     "src": "src/routes/+layout.server.ts",
     "isEntry": true
+  },
+  "src/routes/+layout.svelte": {
+    "file": "entries/pages/_layout.svelte.js",
+    "name": "entries/pages/_layout.svelte",
+    "src": "src/routes/+layout.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js"
+    ]
   },
   "src/routes/+page.svelte": {
     "file": "entries/pages/_page.svelte.js",

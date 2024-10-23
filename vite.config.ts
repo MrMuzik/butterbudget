@@ -4,6 +4,9 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
 	plugins: [sveltekit()],
+	build: {
+		sourcemap: true, // Enable source maps in production
+	},
 	server: {
 		proxy: {
 		  // Proxy /api requests to the API backend using environment variable
