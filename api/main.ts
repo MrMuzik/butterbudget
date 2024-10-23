@@ -5,88 +5,75 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.0.0";
 
 // Determine the environment (local, staging, production) from DENO_ENV
 const env = Deno.env.get("DENO_ENV") || "local"; // Default to 'local' if not set
-let envFile = ".env"; // Fallback to a generic .env
+let envFile = ".env";
 
-// Choose the appropriate .env file based on the environment
+// Load environment variables only for local development
 if (env === "local") {
-  envFile = "../.env.local"; // Correct relative path from /butterbudget/api to /butterbudget
-} else if (env === "staging") {
-  envFile = "../.env.staging";
-} else if (env === "production") {
-  envFile = "../.env.production";
+  envFile = "../.env.local";
+  config({ path: envFile });
 }
 
-// Load the selected .env file based on the environment
-const envVars = config({ path: envFile });
-
 // Supabase credentials
-const supabaseUrl = envVars.SUPABASE_URL || Deno.env.get("SUPABASE_URL");
-const supabaseKey = envVars.SUPABASE_KEY || Deno.env.get("SUPABASE_KEY");
+const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+const supabaseKey = Deno.env.get("SUPABASE_KEY")!;
 
-// Ensure Supabase URL is loaded
+// Ensure Supabase URL and Key are loaded
 if (!supabaseUrl || !supabaseKey) {
-  throw new Error(
-    "Supabase URL or Key is missing. Please check your .env file.",
-  );
+  throw new Error("Supabase URL or Key is missing. Please check your environment variables.");
 }
 
 // Initialize Supabase client
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Get frontend URL for CORS from the environment variables
-const frontendUrl = envVars.FRONTEND_URL || Deno.env.get("FRONTEND_URL");
+// CORS configuration
+const frontendUrl = Deno.env.get("FRONTEND_URL")!;
 
-if (!frontendUrl) {
-  throw new Error("Frontend URL is missing. Please check your .env file.");
-}
+// Allow specific frontend URLs in production, while allowing * in local dev for flexibility
+const corsOptions = {
+  origin: env === "local" ? "*" : frontendUrl,  // Allow all in dev, restrict in production
+  methods: ["GET", "POST", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
-// Create a map to store request counts by IP address for rate limiting
-const rateLimitMap = new Map<string, { count: number; lastRequest: number }>();
+// Create a new Oak application
+const app = new Application();
+const router = new Router();
+
+// Apply CORS middleware using the frontend URL
+app.use(oakCors(corsOptions));
 
 // Custom rate-limiting middleware
+const rateLimitMap = new Map<string, { count: number; lastRequest: number }>();
 function rateLimiter(limit: number, windowMs: number) {
   return async (ctx: any, next: () => Promise<void>) => {
-    const ip = ctx.request.ip || "unknown"; // Get the client's IP address
+    const ip = ctx.request.ip || "unknown";
     const now = Date.now();
 
-    // Check if the IP exists in the map
     if (!rateLimitMap.has(ip)) {
       rateLimitMap.set(ip, { count: 1, lastRequest: now });
     } else {
       const userData = rateLimitMap.get(ip)!;
       const timeDifference = now - userData.lastRequest;
 
-      // Reset the count if the window has passed
       if (timeDifference > windowMs) {
         rateLimitMap.set(ip, { count: 1, lastRequest: now });
       } else {
         userData.count += 1;
-
-        // If the request count exceeds the limit, return a rate-limiting message
         if (userData.count > limit) {
-          ctx.response.status = 429; // Too many requests
+          ctx.response.status = 429;
           ctx.response.body = "Too many requests, please try again later.";
           return;
         }
       }
     }
-
-    // Proceed to the next middleware/route handler
     await next();
   };
 }
 
-// Create a new Oak application
-const app = new Application();
-const router = new Router();
+// Apply rate-limiting: max 100 requests per IP per minute
+app.use(rateLimiter(100, 60 * 1000));
 
-// Apply CORS middleware using the frontend URL from environment variables
-app.use(oakCors({ origin: "*" })); // Allow requests from FRONTEND_URL
-
-// Apply custom rate-limiting middleware: max 100 requests per IP per minute
-app.use(rateLimiter(100, 60 * 1000)); // 100 requests per 60,000 ms (1 minute)
-
-// GET all budget items
+// Define API routes
 router.get("/api/budgets", async (ctx) => {
   const { data, error } = await supabase.from("budgets").select("*");
   if (error) {
@@ -97,12 +84,15 @@ router.get("/api/budgets", async (ctx) => {
   }
 });
 
-// POST a new budget item
+// POST route to create a new budget item
 router.post("/api/budgets", async (ctx) => {
-  const { description, amount } = await ctx.request.body().value;
+  const body = ctx.request.body({ type: "json" });
+  const { description, amount } = await body.value;
+  
   const { data, error } = await supabase
     .from("budgets")
     .insert([{ description, amount }]);
+  
   if (error) {
     ctx.response.status = 500;
     ctx.response.body = { error: error.message };
@@ -112,10 +102,11 @@ router.post("/api/budgets", async (ctx) => {
   }
 });
 
-// DELETE a budget item by ID
+// DELETE route to remove a budget item
 router.delete("/api/budgets/:id", async (ctx) => {
   const id = ctx.params.id;
   const { data, error } = await supabase.from("budgets").delete().eq("id", id);
+  
   if (error) {
     ctx.response.status = 500;
     ctx.response.body = { error: error.message };
@@ -128,10 +119,5 @@ router.delete("/api/budgets/:id", async (ctx) => {
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-// Route handler
-app.use((ctx) => {
-  ctx.response.body = "Hello, Deno with custom rate limiting!";
-});
-
-// Start the server and display environment
+// Start the server
 await app.listen({ port: 8000 });
