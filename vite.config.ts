@@ -8,7 +8,7 @@ export default defineConfig({
 		proxy: {
 		  // Proxy /api requests to the API backend using environment variable
 		  '/api': {
-			target: process.env.VITE_API_BASE_URL || 'http://localhost:8000', // Fallback to localhost if env variable is not set
+			target: process.env.VITE_API_BASE_URL || 'https://butterbudget.deno.dev/',
 			changeOrigin: true,
 			secure: false,
 			rewrite: (path) => path.replace(/^\/api/, '') // Optional: Rewrite path if needed
