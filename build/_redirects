@@ -1,5 +1,2 @@
 /*    /index.html   200
 /api/*   https://butterbudget.deno.dev/api/:splat   200
-
-
-* /.netlify/functions/sveltekit-render 200
