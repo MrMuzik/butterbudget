@@ -10,17 +10,9 @@
   
     // Fetch budget items from the backend
     const fetchBudgets = async () => {
-  try {
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/budgets`);
-    if (!res.ok) {
-      throw new Error(`Error fetching budgets: ${res.status}`);
-    }
-    budgets = await res.json();
-  } catch (err) {
-    console.error("Failed to fetch budgets:", err);
-    // You can set an error message here to display on the frontend if needed.
-  }
-};
+      const res = await fetch(`${API_BASE_URL}/api/budgets`);
+      budgets = await res.json();
+    };
   
     // Add a new budget item
     const addBudget = async () => {
