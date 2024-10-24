@@ -3,22 +3,32 @@ export const ssr = true;
 
 // Fetch the API base URL from environment variables
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-console.log('API_BASE_URL:', API_BASE_URL);
-// export async function load({ fetch }: { fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response> }) {
-//   try {
-//     const res = await fetch(`${API_BASE_URL}/api/budgets`);
 
-//     // Check if the response is OK (status 200–299)
-//     if (!res.ok) {
-//       console.error(`Failed to fetch budgets. Status: ${res.status}`);
-//       return { budgets: [] };  // Return an empty array in case of error
-//     }
+export async function load({ fetch, url }: { fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>, url: URL }) {
+  // Check if we're running on the server or client
+  const isServer = typeof window === 'undefined';
 
-//     const budgets = await res.json();
-//     return { budgets };
+  try {
+    let res;
+    if (isServer) {
+      // Use a relative URL when running server-side to avoid network issues
+      res = await fetch(`${API_BASE_URL}/api/budgets`);
+    } else {
+      // Use absolute URL for the client-side fetch
+      res = await fetch(`/api/budgets`);
+    }
 
-//   } catch (error) {
-//     console.error('Error fetching budgets:', error);
-//     return { budgets: [] };  // Return an empty array in case of error
-//   }
-// }
+    if (!res.ok) {
+      console.error(`Error-1 fetching budgets: ${res.status} ${res.statusText}`);
+      return { budgets: [] };
+    }
+
+    const budgets = await res.json();
+    return { budgets };
+
+  } catch (error) {
+    console.error(`Error-2 fetching budgets: ${error}`);
+    return { budgets: [] };
+  }
+}
+
