@@ -4,7 +4,7 @@ import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.0.0";
 
 // Determine the environment (local, staging, production) from DENO_ENV
-const env = Deno.env.get("DENO_ENV") || "local"; // Default to 'local' if not set
+const env = Deno.env.get("ENV") || "local"; // Default to 'local' if not set
 let envFile = ".env";  // Fallback to a generic .env
 
 // Choose the appropriate .env file based on the environment
