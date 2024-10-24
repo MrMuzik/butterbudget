@@ -1,1 +1,0 @@
-{"version":3,"file":"0.C9tUm3Ec.js","sources":["../../../../../../src/routes/+layout.svelte"],"sourcesContent":["<script>\n    console.log('Layout component is loading...');\n</script>\n\n<slot />\n"],"names":[],"mappings":"ocACI,eAAQ,IAAI,gCAAgC"}
