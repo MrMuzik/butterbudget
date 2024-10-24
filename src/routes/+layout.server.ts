@@ -23,7 +23,7 @@ export async function load({ fetch, url }: { fetch: (input: RequestInfo, init?: 
       return { budgets: [] };
     }
 
-    const budgets = await res.json();
+    const budgets = await res.text();
     return { budgets };
 
   } catch (error) {
