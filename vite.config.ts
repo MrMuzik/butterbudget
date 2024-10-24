@@ -10,7 +10,7 @@ export default defineConfig({
 				// Use environment variable for backend URL, defaulting to localhost:8000
 				target: process.env.VITE_API_BASE_URL || 'http://localhost:8000',
 				changeOrigin: true,
-				secure: true,
+				secure: false,
 			},
 		},
 	},
